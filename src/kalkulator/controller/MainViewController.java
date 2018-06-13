@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -36,18 +38,26 @@ public class MainViewController implements Initializable {
 
   @FXML
   public void calculate(ActionEvent event) {
-    
+
     try {
-    
+
       ScriptEngineManager manager = new ScriptEngineManager();
       ScriptEngine engine = manager.getEngineByName("js");
       Object result = engine.eval(txtFormula.getText());
       txtResult.setText(result.toString());
-      
+
     } catch (ScriptException ex) {
       Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
     }
-    
+
+  }
+
+  @FXML
+  public void clearResult(KeyEvent event) {
+    if (event.getCode() == KeyCode.ESCAPE) {
+      txtFormula.setText("");
+      txtResult.setText("");
+    }
   }
 
 }
